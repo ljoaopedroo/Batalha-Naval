@@ -73,9 +73,10 @@ def ataque_maquina(tabuleiro_humano, quantidade_navios_humano, tabuleiro_humano_
 
     if tabuleiro_humano[linha][coluna] == 1:
         acerto_maquina = True
-        tabuleiro_humano_marcado[linha][coluna] = 'X'
+        tabuleiro_humano_marcado[linha][coluna] = '💥'
         quantidade_navios_humano -= 1
     else:
+        tabuleiro_humano_marcado[linha][coluna] = '👎'
         acerto_maquina = False
 
     return tabuleiro_humano, tabuleiro_humano_marcado, quantidade_navios_humano, acerto_maquina, linha, coluna
@@ -83,6 +84,7 @@ def ataque_maquina(tabuleiro_humano, quantidade_navios_humano, tabuleiro_humano_
 def feedback_maquina(acerto_maquina,linha,coluna):
 
     if acerto_maquina == True:
+        print()
         print(f"Computador escolheu a linha {linha}")
         print(f"Computador escolheu a coluna {coluna}")
         print("Computador acertou!")
@@ -102,10 +104,11 @@ def ataque_humano(tabuleiro_maquina, tabuleiro_maquina_marcado, quantidade_navio
 
     if tabuleiro_maquina[linha][coluna] == 1:
         acerto_humano = True
-        tabuleiro_maquina_marcado[linha][coluna] = 'X'
+        tabuleiro_maquina_marcado[linha][coluna] = '💥'
         quantidade_navios_maquina -= 1
 
     else:
+        tabuleiro_maquina_marcado[linha][coluna] = '👎'
         acerto_humano = False
 
     return tabuleiro_maquina, tabuleiro_maquina_marcado, quantidade_navios_maquina,acerto_humano
@@ -144,6 +147,7 @@ def mostrador(tabuleiro_maquina_marcado, tabuleiro_humano_marcado, quantidade_na
 def incial():
     print('-' * 50)
     print("Bem vindo ao Batalha Naval!")
+    print("Legenda: '👎' = Posição já atacada, '💥' = Embarcação abatida ")
     print()
     print()
     print("Tabuleiro do Computador")
@@ -152,7 +156,7 @@ def incial():
     for i in range(5):
         linha = []
         for j in range(10):
-            linha.append(0)
+            linha.append('🌊')
         tabuleiro_maquina_marcado.append(linha)
 
     for linha in tabuleiro_maquina_marcado:
@@ -169,7 +173,7 @@ def incial():
     for i in range(5):
         linha = []
         for j in range(10):
-            linha.append(0)
+            linha.append('🌊')
         tabuleiro_humano_marcado.append(linha)
 
     for linha in tabuleiro_humano_marcado:
@@ -207,7 +211,6 @@ def main():
         while verificaçao != 1:
             print("Digite um comando válido")
             verificaçao = int(input("Digite '1' para prosseguir: "))
-            print()
 
         tabuleiro_humano, tabuleiro_humano_marcado, quantidade_navios_humano, acerto_maquina, linha, coluna = ataque_maquina(tabuleiro_humano, quantidade_navios_humano, tabuleiro_humano_marcado, posicoes_atacadas_maquina)
         feedback_maquina(acerto_maquina, linha, coluna)
