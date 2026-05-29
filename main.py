@@ -1,0 +1,224 @@
+import random
+
+def maquina():
+    tabuleiro_maquina = []
+
+    for i in range(5):
+        linha = []
+        for j in range(10):
+            linha.append(0)
+        tabuleiro_maquina.append(linha)
+
+    quantidade_navios_maquina = 5
+    navios_colocados = 0
+
+    while navios_colocados < quantidade_navios_maquina:
+        linha = random.randint(0, 4)
+        coluna = random.randint(0, 9)
+
+        if tabuleiro_maquina[linha][coluna] == 0:
+            tabuleiro_maquina[linha][coluna] = 1
+            navios_colocados += 1
+
+    return tabuleiro_maquina, quantidade_navios_maquina
+
+
+def humano(posicoes):          
+    tabuleiro_humano = []
+    quantidade_navios_humano = 5
+
+    for i in range(5):
+        linha = []
+        for j in range(10):
+            linha.append(0)
+        tabuleiro_humano.append(linha)  
+
+    for (x, y) in posicoes:           
+        tabuleiro_humano[x][y] = 1
+
+    return tabuleiro_humano, quantidade_navios_humano
+
+
+def escolha_humano():
+    posicoes = []
+
+    for i in range(5):
+        print(f"Navio {i + 1}")
+
+        while True:
+            x = int(input(f"Qual linha deseja colocar o navio {i + 1}? (0 a 4) "))
+            y = int(input(f"Qual coluna deseja colocar o navio {i + 1}? (0 a 9) "))
+
+            if x < 0 or x > 4:
+                print("Linha inválida! Digite entre 0 e 4.")
+            elif y < 0 or y > 9:
+                print("Coluna inválida! Digite entre 0 e 9.")
+            elif (x, y) in posicoes:
+                print("Posição já ocupada! Escolha outra.")
+            else:
+                posicoes.append((x, y))
+                break  
+
+        print('-' * 50)
+    return posicoes            
+
+def ataque_maquina(tabuleiro_humano, quantidade_navios_humano, tabuleiro_humano_marcado, posicoes_atacadas):
+    while True:
+        linha = random.randint(0, 4)
+        coluna = random.randint(0, 9)
+
+        if (linha, coluna) not in posicoes_atacadas:  
+            posicoes_atacadas.append((linha, coluna))
+            break
+
+    if tabuleiro_humano[linha][coluna] == 1:
+        acerto_maquina = True
+        tabuleiro_humano_marcado[linha][coluna] = 'X'
+        quantidade_navios_humano -= 1
+    else:
+        acerto_maquina = False
+
+    return tabuleiro_humano, tabuleiro_humano_marcado, quantidade_navios_humano, acerto_maquina, linha, coluna
+
+def feedback_maquina(acerto_maquina,linha,coluna):
+
+    if acerto_maquina == True:
+        print(f"Computador escolheu a linha {linha}")
+        print(f"Computador escolheu a coluna {coluna}")
+        print("Computador acertou!")
+    
+    else:
+        print(f"Computador escolheu a linha {linha}")
+        print(f"Computador escolheu a coluna {coluna}")
+        print("Computador errou!")
+
+
+
+
+
+def ataque_humano(tabuleiro_maquina, tabuleiro_maquina_marcado, quantidade_navios_maquina):
+    linha = int(input("Qual linha deseja atacar? "))
+    coluna = int(input("Qual coluna deseja atacar? "))
+
+    if tabuleiro_maquina[linha][coluna] == 1:
+        acerto_humano = True
+        tabuleiro_maquina_marcado[linha][coluna] = 'X'
+        quantidade_navios_maquina -= 1
+
+    else:
+        acerto_humano = False
+
+    return tabuleiro_maquina, tabuleiro_maquina_marcado, quantidade_navios_maquina,acerto_humano
+
+
+def feedback_humano(acerto_humano):
+    if acerto_humano == True:
+        print()
+        print("Parabéns! Você acertou!")
+    
+    else:
+        print()
+        print("Não foi dessa vez!")
+
+
+def mostrador(tabuleiro_maquina_marcado, tabuleiro_humano_marcado, quantidade_navios_humano, quantidade_navios_maquina):
+    print()
+    print()
+    print("Tabuleiro do computador")
+    for linha in tabuleiro_maquina_marcado:
+        print(linha)
+    print('-' * 50)
+    print(f"Embarcações restantes: {quantidade_navios_maquina}")
+
+    print()
+    print()
+    print("Tabuleiro do Jogador")
+    for linha in tabuleiro_humano_marcado:
+        print(linha)
+    print('-' * 50)
+    print(f"Embarcações restantes: {quantidade_navios_humano}")
+    print()
+    print()
+
+
+def incial():
+    print('-' * 50)
+    print("Bem vindo ao Batalha Naval!")
+    print()
+    print()
+    print("Tabuleiro do Computador")
+    tabuleiro_maquina_marcado = []
+
+    for i in range(5):
+        linha = []
+        for j in range(10):
+            linha.append(0)
+        tabuleiro_maquina_marcado.append(linha)
+
+    for linha in tabuleiro_maquina_marcado:
+            print(linha)
+    
+    print('-' * 50)
+    print("Embarcações restantes: 5")
+
+    print()
+    print()
+    print("Tabuleiro do Jogador")
+    tabuleiro_humano_marcado = []
+
+    for i in range(5):
+        linha = []
+        for j in range(10):
+            linha.append(0)
+        tabuleiro_humano_marcado.append(linha)
+
+    for linha in tabuleiro_humano_marcado:
+            print(linha)
+    
+    print('-' * 50)
+    print("Embarcações restantes: 5")
+    print()
+    print()
+
+    return tabuleiro_humano_marcado, tabuleiro_maquina_marcado 
+
+
+
+def main():
+    tabuleiro_humano_marcado, tabuleiro_maquina_marcado = incial()
+    posiçoes = escolha_humano()
+    tabuleiro_humano, quantidade_navios_humano = humano(posiçoes)
+    tabuleiro_maquina, quantidade_navios_maquina = maquina()
+
+    posicoes_atacadas_maquina = []
+
+    while quantidade_navios_humano > 0 and quantidade_navios_maquina > 0:
+        mostrador(tabuleiro_maquina_marcado, tabuleiro_humano_marcado, quantidade_navios_humano, quantidade_navios_maquina)
+        
+        tabuleiro_maquina, tabuleiro_maquina_marcado, quantidade_navios_maquina, acerto_humano = ataque_humano(tabuleiro_maquina, tabuleiro_maquina_marcado, quantidade_navios_maquina)
+        feedback_humano(acerto_humano)
+        mostrador(tabuleiro_maquina_marcado, tabuleiro_humano_marcado, quantidade_navios_humano, quantidade_navios_maquina)
+
+        
+        if quantidade_navios_maquina == 0:
+            break
+
+        verificaçao = int(input("Digite '1' para prosseguir: "))
+        while verificaçao != 1:
+            print("Digite um comando válido")
+            verificaçao = int(input("Digite '1' para prosseguir: "))
+            print()
+
+        tabuleiro_humano, tabuleiro_humano_marcado, quantidade_navios_humano, acerto_maquina, linha, coluna = ataque_maquina(tabuleiro_humano, quantidade_navios_humano, tabuleiro_humano_marcado, posicoes_atacadas_maquina)
+        feedback_maquina(acerto_maquina, linha, coluna)
+        
+
+    if quantidade_navios_maquina == 0:
+        print("Parabéns! Você afundou todas as embarcações do inimigo!")
+        print("Jogo desenvolvido por: Gabriel Sandrini, João Pedro Lima e Mateus Picinin.")
+        print("Obrigada por jogar nosso jogo!")
+
+    else:
+        print("Computador venceu!")
+
+main()
