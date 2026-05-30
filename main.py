@@ -46,17 +46,17 @@ def escolha_humano():
         print(f"Navio {i + 1}")
 
         while True:
-            x = int(input(f"Qual linha deseja colocar o navio {i + 1}? (0 a 4) "))
-            y = int(input(f"Qual coluna deseja colocar o navio {i + 1}? (0 a 9) "))
+            x = int(input(f"Qual linha deseja colocar o navio {i + 1}? (1 a 5) "))
+            y = int(input(f"Qual coluna deseja colocar o navio {i + 1}? (1 a 10) "))
 
-            if x < 0 or x > 4:
-                print("Linha inválida! Digite entre 0 e 4.")
-            elif y < 0 or y > 9:
-                print("Coluna inválida! Digite entre 0 e 9.")
-            elif (x, y) in posicoes:
+            if x-1 < 0 or x-1 > 4:
+                print("Linha inválida! Digite entre 1 e 5.")
+            elif y-1 < 0 or y-1 > 9:
+                print("Coluna inválida! Digite entre 1 e 10.")
+            elif (x-1, y-1) in posicoes:
                 print("Posição já ocupada! Escolha outra.")
             else:
-                posicoes.append((x, y))
+                posicoes.append((x-1, y-1))
                 break  
 
         print('-' * 50)
@@ -99,21 +99,27 @@ def feedback_maquina(acerto_maquina,linha,coluna):
 
 
 def ataque_humano(tabuleiro_maquina, tabuleiro_maquina_marcado, quantidade_navios_maquina):
-    linha = int(input("Qual linha deseja atacar? "))
-    coluna = int(input("Qual coluna deseja atacar? "))
-
-    if tabuleiro_maquina[linha][coluna] == 1:
+    posicao_valida = True
+    while posicao_valida == True:
+        linha = int(input("Qual linha deseja atacar? "))
+        coluna = int(input("Qual coluna deseja atacar? "))
+        if tabuleiro_maquina_marcado[linha-1][coluna-1] == '👎' or tabuleiro_maquina_marcado[linha-1][coluna-1] == '💥':
+            print('Voce ja atacou essa posição!')
+        elif linha > 5  or linha < 1 or coluna > 10 or coluna < 1:
+            print('Coordenada inválida!')
+        else:
+            posicao_valida = False
+    if tabuleiro_maquina[linha-1][coluna-1] == 1:
         acerto_humano = True
-        tabuleiro_maquina_marcado[linha][coluna] = '💥'
+        tabuleiro_maquina_marcado[linha-1][coluna-1] = '💥'
         quantidade_navios_maquina -= 1
-
     else:
-        tabuleiro_maquina_marcado[linha][coluna] = '👎'
+        tabuleiro_maquina_marcado[linha-1][coluna-1] = '👎'
         acerto_humano = False
 
     return tabuleiro_maquina, tabuleiro_maquina_marcado, quantidade_navios_maquina,acerto_humano
 
-
+ 
 def feedback_humano(acerto_humano):
     if acerto_humano == True:
         print()
