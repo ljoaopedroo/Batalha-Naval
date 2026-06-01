@@ -103,10 +103,11 @@ def ataque_humano(tabuleiro_maquina, tabuleiro_maquina_marcado, quantidade_navio
     while posicao_valida == True:
         linha = int(input("Qual linha deseja atacar? "))
         coluna = int(input("Qual coluna deseja atacar? "))
-        if tabuleiro_maquina_marcado[linha-1][coluna-1] == '👎' or tabuleiro_maquina_marcado[linha-1][coluna-1] == '💥':
-            print('Voce ja atacou essa posição!')
-        elif linha > 5  or linha < 1 or coluna > 10 or coluna < 1:
+        
+        if linha > 5  or linha < 1 or coluna > 10 or coluna < 1:
             print('Coordenada inválida!')
+        elif tabuleiro_maquina_marcado[linha-1][coluna-1] == '👎' or tabuleiro_maquina_marcado[linha-1][coluna-1] == '💥':
+            print('Voce ja atacou essa posição!')
         else:
             posicao_valida = False
     if tabuleiro_maquina[linha-1][coluna-1] == 1:
