@@ -46,8 +46,15 @@ def escolha_humano():
         print(f"Navio {i + 1}")
 
         while True:
-            x = int(input(f"Qual linha deseja colocar o navio {i + 1}? (1 a 10) "))
-            y = int(input(f"Qual coluna deseja colocar o navio {i + 1}? (1 a 10) "))
+            x = input(f"Qual linha deseja colocar o navio {i + 1}? (1 a 10) ")
+            y = input(f"Qual coluna deseja colocar o navio {i + 1}? (1 a 10) ")
+
+            if not x.isdigit() or not y.isdigit():
+                print("Digite apenas números!")
+                continue
+
+            x = int(x)
+            y = int(y)
 
             if x-1 < 0 or x-1 > 9:
                 print("Linha inválida! Digite entre 1 e 10.")
@@ -101,8 +108,15 @@ def feedback_maquina(acerto_maquina,linha,coluna):
 def ataque_humano(tabuleiro_maquina, tabuleiro_maquina_marcado, quantidade_navios_maquina):
     posicao_valida = True
     while posicao_valida == True:
-        linha = int(input("Qual linha deseja atacar? "))
-        coluna = int(input("Qual coluna deseja atacar? "))
+        linha = input("Qual linha deseja atacar? ")
+        coluna = input("Qual coluna deseja atacar? ")
+
+        if not linha.isdigit() or not coluna.isdigit():
+            print("Digite apenas números!")
+            continue
+
+        linha = int(linha)
+        coluna = int(coluna)
         
         if linha > 10  or linha < 1 or coluna > 10 or coluna < 1:
             print('Coordenada inválida!')
