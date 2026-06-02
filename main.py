@@ -3,7 +3,7 @@ import random
 def maquina():
     tabuleiro_maquina = []
 
-    for i in range(5):
+    for i in range(10):
         linha = []
         for j in range(10):
             linha.append(0)
@@ -13,7 +13,7 @@ def maquina():
     navios_colocados = 0
 
     while navios_colocados < quantidade_navios_maquina:
-        linha = random.randint(0, 4)
+        linha = random.randint(0, 9)
         coluna = random.randint(0, 9)
 
         if tabuleiro_maquina[linha][coluna] == 0:
@@ -27,7 +27,7 @@ def humano(posicoes):
     tabuleiro_humano = []
     quantidade_navios_humano = 5
 
-    for i in range(5):
+    for i in range(10):
         linha = []
         for j in range(10):
             linha.append(0)
@@ -46,11 +46,11 @@ def escolha_humano():
         print(f"Navio {i + 1}")
 
         while True:
-            x = int(input(f"Qual linha deseja colocar o navio {i + 1}? (1 a 5) "))
+            x = int(input(f"Qual linha deseja colocar o navio {i + 1}? (1 a 10) "))
             y = int(input(f"Qual coluna deseja colocar o navio {i + 1}? (1 a 10) "))
 
-            if x-1 < 0 or x-1 > 4:
-                print("Linha inválida! Digite entre 1 e 5.")
+            if x-1 < 0 or x-1 > 9:
+                print("Linha inválida! Digite entre 1 e 10.")
             elif y-1 < 0 or y-1 > 9:
                 print("Coluna inválida! Digite entre 1 e 10.")
             elif (x-1, y-1) in posicoes:
@@ -59,12 +59,12 @@ def escolha_humano():
                 posicoes.append((x-1, y-1))
                 break  
 
-        print('-' * 50)
+        print('-' * 64)
     return posicoes            
 
 def ataque_maquina(tabuleiro_humano, quantidade_navios_humano, tabuleiro_humano_marcado, posicoes_atacadas):
     while True:
-        linha = random.randint(0, 4)
+        linha = random.randint(0, 9)
         coluna = random.randint(0, 9)
 
         if (linha, coluna) not in posicoes_atacadas:  
@@ -104,7 +104,7 @@ def ataque_humano(tabuleiro_maquina, tabuleiro_maquina_marcado, quantidade_navio
         linha = int(input("Qual linha deseja atacar? "))
         coluna = int(input("Qual coluna deseja atacar? "))
         
-        if linha > 5  or linha < 1 or coluna > 10 or coluna < 1:
+        if linha > 10  or linha < 1 or coluna > 10 or coluna < 1:
             print('Coordenada inválida!')
         elif tabuleiro_maquina_marcado[linha-1][coluna-1] == '👎' or tabuleiro_maquina_marcado[linha-1][coluna-1] == '💥':
             print('Voce ja atacou essa posição!')
@@ -137,7 +137,7 @@ def mostrador(tabuleiro_maquina_marcado, tabuleiro_humano_marcado, quantidade_na
     print("Tabuleiro do computador")
     for linha in tabuleiro_maquina_marcado:
         print(linha)
-    print('-' * 50)
+    print('-' * 64)
     print(f"Embarcações restantes: {quantidade_navios_maquina}")
 
     print()
@@ -145,14 +145,14 @@ def mostrador(tabuleiro_maquina_marcado, tabuleiro_humano_marcado, quantidade_na
     print("Tabuleiro do Jogador")
     for linha in tabuleiro_humano_marcado:
         print(linha)
-    print('-' * 50)
+    print('-' * 64)
     print(f"Embarcações restantes: {quantidade_navios_humano}")
     print()
     print()
 
 
 def incial():
-    print('-' * 50)
+    print('-' * 64)
     print("Bem vindo ao Batalha Naval!")
     print("Legenda: '👎' = Posição já atacada, '💥' = Embarcação abatida ")
     print()
@@ -160,7 +160,7 @@ def incial():
     print("Tabuleiro do Computador")
     tabuleiro_maquina_marcado = []
 
-    for i in range(5):
+    for i in range(10):
         linha = []
         for j in range(10):
             linha.append('🌊')
@@ -169,7 +169,7 @@ def incial():
     for linha in tabuleiro_maquina_marcado:
             print(linha)
     
-    print('-' * 50)
+    print('-' * 64)
     print("Embarcações restantes: 5")
 
     print()
@@ -177,7 +177,7 @@ def incial():
     print("Tabuleiro do Jogador")
     tabuleiro_humano_marcado = []
 
-    for i in range(5):
+    for i in range(10):
         linha = []
         for j in range(10):
             linha.append('🌊')
@@ -186,7 +186,7 @@ def incial():
     for linha in tabuleiro_humano_marcado:
             print(linha)
     
-    print('-' * 50)
+    print('-' * 64)
     print("Embarcações restantes: 5")
     print()
     print()
