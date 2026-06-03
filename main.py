@@ -224,14 +224,13 @@ def main():
         feedback_humano(acerto_humano)
         mostrador(tabuleiro_maquina_marcado, tabuleiro_humano_marcado, quantidade_navios_humano, quantidade_navios_maquina)
 
-        
         if quantidade_navios_maquina == 0:
             break
 
-        verificaçao = int(input("Digite '1' para prosseguir: "))
-        while verificaçao != 1:
+        verificaçao = input("Digite '1' para prosseguir: ")
+        while not verificaçao.isdigit() or int(verificaçao) != 1:
             print("Digite um comando válido")
-            verificaçao = int(input("Digite '1' para prosseguir: "))
+            verificaçao = input("Digite '1' para prosseguir: ")
 
         tabuleiro_humano, tabuleiro_humano_marcado, quantidade_navios_humano, acerto_maquina, linha, coluna = ataque_maquina(tabuleiro_humano, quantidade_navios_humano, tabuleiro_humano_marcado, posicoes_atacadas_maquina)
         feedback_maquina(acerto_maquina, linha, coluna)
